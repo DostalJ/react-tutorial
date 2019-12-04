@@ -11,7 +11,7 @@ function Square(props) {
             {props.value}
         </button>
 
-        )
+    )
 }
 
 //Note
@@ -28,8 +28,10 @@ class Board extends React.Component {
         super(props);
         this.state = {
             squares: Array(9).fill(null),
+            xIsNext: true,
         };
     }
+
     // When we fill the board in later, the this.state.squares array will look something like this:
     //     [
     //         'O', null, 'X',
@@ -37,11 +39,11 @@ class Board extends React.Component {
     //         'O', null, null,
     //     ]
 
-    handleClick(i){
+    handleClick(i) {
         // we call .slice() to create a copy of the squares array to modify instead of modifying the existing array
-        const squares =  this.state.squares.slice();
-        squares[i] = 'X';
-        this.setState({squares: squares});
+        const squares = this.state.squares.slice();
+        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        this.setState({squares: squares, xIsNext: !this.state.xIsNext});
     }
 
     renderSquare(i) {
@@ -54,7 +56,7 @@ class Board extends React.Component {
     }
 
     render() {
-        const status = 'Next player: X';
+        const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
         return (
             <div>
